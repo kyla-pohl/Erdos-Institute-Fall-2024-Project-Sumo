@@ -67,8 +67,8 @@ def add_col_for_penultimate_day_7_wins(datfram):
         return wins
 
     # Apply the function to each row in 'rikishi1_result' and create the new column
-    df['rikishi1_wins_in_tournament'] = df['rikishi1_result'].apply(calculate_wins)
-    df['rikishi2_wins_in_tournament'] = df['rikishi2_result'].apply(calculate_wins)
+    datfram['rikishi1_wins_in_tournament'] = datfram['rikishi1_result'].apply(calculate_wins)
+    datfram['rikishi2_wins_in_tournament'] = datfram['rikishi2_result'].apply(calculate_wins)
 
 
     datfram['rikishi1_penultimate_day_7_wins'] = None
