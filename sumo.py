@@ -24,15 +24,15 @@ def get_ordinal_rank(df):
         value=''.join(value)
         rank_dict[key] = value
 
-    df['rikishi1_sortable_rank'] = df['rikishi1_rank'].map(rank_dict)
+    df['r1_sort_rank'] = df['rikishi1_rank'].map(rank_dict)
 
 
-    df_sorted = df.sort_values(by=['rikishi1_sortable_rank'])
-    sort_list = df_sorted['rikishi1_sortable_rank'].unique().tolist()
+    df_sorted = df.sort_values(by=['r1_sort_rank'])
+    sort_list = df_sorted['r1_sort_rank'].unique().tolist()
     ordinal_rank = {}
     for rank in sort_list:
         ordinal_rank[rank] = sort_list.index(rank)+1
         
-    df['ordinal_rank'] = df['rikishi1_sortable_rank'].map(ordinal_rank)
+    df['r1_ord_rank'] = df['r1_sort_rank'].map(ordinal_rank)
 
     return df
