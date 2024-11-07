@@ -36,3 +36,75 @@ def get_ordinal_rank(df):
     df['ordinal_rank'] = df['rikishi1_sortable_rank'].map(ordinal_rank)
 
     return df
+
+
+# This function adds  column which tells us if a given player has 7 wins on the 14th day of a tournament. (We get None for non-penultimate days.)
+
+def add_col_for_penultimate_day_7_wins(datfram):
+
+    # Define the function to calculate wins
+    def calculate_wins(result):
+        # Initialize wins with None
+        wins = None
+        
+        # Ensure result has at least three elements for safe indexing
+        if len(result) < 3:
+            return wins
+
+        # Check if the result starts with '(' and matches other conditions
+        if result[0] == '(':
+            if result[2] != '-':
+                wins = result[1] + result[2]  # Concatenate first and second characters if second character is '0'
+            elif result[1].isdigit() and int(result[1]) < 10:
+                wins = result[1]  # If result[1] is a single digit, assign it to wins as an integer
+
+        # Check alternative conditions if not wrapped in parentheses
+        elif result[1] != '-':
+            wins = result[0] + result[1]
+        elif result[0].isdigit() and int(result[0]) < 10:
+            wins = int(result[0])
+
+        return wins
+
+    # Apply the function to each row in 'rikishi1_result' and create the new column
+    df['rikishi1_wins_in_tournament'] = df['rikishi1_result'].apply(calculate_wins)
+    df['rikishi2_wins_in_tournament'] = df['rikishi2_result'].apply(calculate_wins)
+
+
+    datfram['rikishi1_penultimate_day_7_wins'] = None
+    datfram['rikishi2_penultimate_day_7_wins'] = None
+
+    for i in range(datfram.shape[0]):
+        if datfram['day'][i] == 14:
+            if datfram['rikishi1_wins_in_tournament'][i] == 7:
+                datfram.loc[i,'rikishi1_penultimate_day_7_wins'] = True
+            if datfram['rikishi1_wins_in_tournament'][i] != 7:
+                datfram.loc[i,'rikishi1_penultimate_day_7_wins'] = False
+
+            if datfram['rikishi2_wins_in_tournament'][i] == 7:
+                datfram.loc[i,'rikishi2_penultimate_day_7_wins'] = True
+            if datfram['rikishi2_wins_in_tournament'][i] != 7:
+                datfram.loc[i,'rikishi2_penultimate_day_7_wins'] = False
+    
+    return datfram
+
+
+
+# This function adds a column that tells us how long a given player has been in sumo.
+
+def get_how_long_in_sumo(datfram):
+    # Make a column for year.
+    datfram['year'] = datfram['basho'].astype(str).str.split('.').str[0].astype(int)
+
+    # Sort by year.
+    datfram = datfram.sort_values(by=['year'])
+
+    # Find the first appearance year for each rikishi id.
+    first_appearance_1 = datfram.groupby('rikishi1_id')['year'].transform('min')
+    first_appearance_2 = datfram.groupby('rikishi2_id')['year'].transform('min')
+
+    # Calculate years since first appearance (inclusive) and add this column to the df.
+    datfram['rikishi1_years_in_sumo'] = datfram['year'] - first_appearance_1 + 1
+    datfram['rikishi2_years_in_sumo'] = datfram['year'] - first_appearance_2 + 1
+
+    return datfram
