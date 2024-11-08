@@ -37,7 +37,34 @@ def get_ordinal_rank(df):
 
     return df
 
+def prior_record(df):
+    """    
+    Creates "r1_prior_wins" and "r1_prior_losses" that gives the prior record before the match
+    """
+    #Split basho to year and 'trny' columns, make day int type
+    df['year'] = df['basho'].astype(str).str.split('.').str[0]
+    df['trny'] = df['basho'].astype(str).str.split('.').str[1]
+    df['day'] = df['day'].astype(str).astype(int)
 
+    #sort by col
+    col = ['basho', 'rikishi1_id', 'year', 'trny', 'day']
+    df = df.sort_values(col)
+
+    def process_result(result):
+        if result[0] == '(' :
+            result = re.sub(r'[()]', '', result)
+        else:
+            result = re.split(r"\(", result)[0]
+    
+        return result
+    
+    df['r1_prior_record'] = df['rikishi1_result'].apply(process_result)
+
+    df['r1_prior_wins'] = df['r1_prior_record'].astype(str).str.split('-').str[0].astype(int) - df['rikishi1_win'].astype(int)
+    df['r1_prior_losses'] = df['r1_prior_record'].astype(str).str.split('-').str[1].astype(int) - df['rikishi2_win'].astype(int)
+    df['prior_record'] = df['r1_prior_wins'].astype(str)+'-'+df['r1_prior_losses'].astype(str)
+
+    return df
 # This function adds  column which tells us if a given player has 7 wins on the 14th day of a tournament. (We get None for non-penultimate days.)
 
 def add_col_for_penultimate_day_7_wins(datfram):
