@@ -1,0 +1,11 @@
+index,basho,day,rikishi1_id,rikishi1_rank,rikishi1_shikona,rikishi1_result,rikishi1_win,kimarite,rikishi2_id,rikishi2_rank,rikishi2_shikona,rikishi2_result,rikishi2_win
+0,1983.01,1,4140,J13w,Chikubayama,0-1 (7-8),0,yorikiri,4306,Ms1e,Ofuji,1-0 (6-1),1
+1,1983.01,1,4306,Ms1e,Ofuji,1-0 (6-1),1,yorikiri,4140,J13w,Chikubayama,0-1 (7-8),0
+2,1983.01,1,1337,J12w,Tochitsukasa,1-0 (9-6),1,oshidashi,4323,J13e,Shiraiwa,0-1 (3-12),0
+3,1983.01,1,4323,J13e,Shiraiwa,0-1 (3-12),0,oshidashi,1337,J12w,Tochitsukasa,1-0 (9-6),1
+4,1983.01,1,4097,J12e,Tamakiyama,0-1 (8-7),0,yorikiri,4319,J11w,Harunafuji,1-0 (5-10),1
+5,1983.01,1,4319,J11w,Harunafuji,1-0 (5-10),1,yorikiri,4097,J12e,Tamakiyama,0-1 (8-7),0
+6,1983.01,1,4109,J10w,Kotogatake,0-1 (7-8),0,tsukidashi,4129,J11e,Hakuryuyama,1-0 (3-12),1
+7,1983.01,1,4129,J11e,Hakuryuyama,1-0 (3-12),1,tsukidashi,4109,J10w,Kotogatake,0-1 (7-8),0
+8,1983.01,1,4111,J10e,Zaonishiki,0-1 (4-11),0,hatakikomi,4130,J9w,Hachiya,1-0 (8-7),1
+9,1983.01,1,4130,J9w,Hachiya,1-0 (8-7),1,hatakikomi,4111,J10e,Zaonishiki,0-1 (4-11),0
