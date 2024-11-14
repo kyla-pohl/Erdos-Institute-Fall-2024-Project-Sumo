@@ -35,6 +35,18 @@ def get_ordinal_rank(df):
         
     df['r1_ord_rank'] = df['r1_sort_rank'].map(ordinal_rank)
 
+
+    df['r2_sort_rank'] = df['rikishi2_rank'].map(rank_dict)
+
+
+    df_sorted = df.sort_values(by=['r2_sort_rank'])
+    sort_list = df_sorted['r2_sort_rank'].unique().tolist()
+    ordinal_rank = {}
+    for rank in sort_list:
+        ordinal_rank[rank] = sort_list.index(rank)+1
+        
+    df['r2_ord_rank'] = df['r2_sort_rank'].map(ordinal_rank)
+
     return df
 
 def prior_record(df):
